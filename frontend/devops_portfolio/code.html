@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Portfolio DevOps Platform</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config injected from Style Guidance -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed": "#acedff",
+                      "tertiary-fixed": "#ffdadb",
+                      "on-surface-variant": "#bcc9cd",
+                      "secondary-container": "#00b954",
+                      "tertiary": "#ffb2b7",
+                      "on-tertiary-fixed": "#40000d",
+                      "background": "#0b1326",
+                      "on-error": "#690005",
+                      "tertiary-container": "#ff7f8b",
+                      "inverse-surface": "#dae2fd",
+                      "primary": "#4cd7f6",
+                      "secondary-fixed-dim": "#4ae176",
+                      "surface-container-lowest": "#060e20",
+                      "error-container": "#93000a",
+                      "surface-container-high": "#222a3d",
+                      "surface-dim": "#0b1326",
+                      "on-primary": "#003640",
+                      "outline": "#869397",
+                      "error": "#ffb4ab",
+                      "surface-container": "#171f33",
+                      "surface-container-highest": "#2d3449",
+                      "on-tertiary": "#67001b",
+                      "surface-bright": "#31394d",
+                      "on-primary-fixed-variant": "#004e5c",
+                      "on-primary-fixed": "#001f26",
+                      "primary-fixed-dim": "#4cd7f6",
+                      "outline-variant": "#3d494c",
+                      "on-secondary-fixed": "#002109",
+                      "surface-container-low": "#131b2e",
+                      "on-error-container": "#ffdad6",
+                      "on-tertiary-fixed-variant": "#92002a",
+                      "on-secondary": "#003915",
+                      "surface": "#0b1326",
+                      "surface-variant": "#2d3449",
+                      "inverse-primary": "#00687a",
+                      "primary-container": "#06b6d4",
+                      "surface-tint": "#4cd7f6",
+                      "on-secondary-container": "#004119",
+                      "on-secondary-fixed-variant": "#005321",
+                      "on-tertiary-container": "#7d0023",
+                      "secondary-fixed": "#6bff8f",
+                      "on-primary-container": "#00424f",
+                      "secondary": "#4ae176",
+                      "tertiary-fixed-dim": "#ffb2b7",
+                      "inverse-on-surface": "#283044",
+                      "on-background": "#dae2fd",
+                      "on-surface": "#dae2fd"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "xl": "80px",
+                      "md": "24px",
+                      "margin-desktop": "40px",
+                      "sm": "16px",
+                      "xs": "8px",
+                      "margin-mobile": "16px",
+                      "base": "4px",
+                      "lg": "48px"
+              },
+              "fontFamily": {
+                      "label-caps": ["JetBrains Mono"],
+                      "body-lg": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "code-md": ["JetBrains Mono"],
+                      "headline-md": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-md": ["Inter"]
+              },
+              "fontSize": {
+                      "label-caps": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "code-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "headline-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        /* Custom Styles for Glow and Animations */
+        body {
+            background-color: #0b1326; /* match surface */
+            color: #dae2fd; /* match on-surface */
+            overflow-x: hidden;
+        }
+        
+        .glow-border:hover {
+            box-shadow: inset 0 0 10px rgba(76, 215, 246, 0.2);
+            border-color: #4cd7f6;
+            background-color: rgba(76, 215, 246, 0.05);
+        }
+
+        .pulse-green {
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 225, 118, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(74, 225, 118, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 225, 118, 0); }
+        }
+
+        .ghost-badge {
+            background-color: rgba(76, 215, 246, 0.1);
+            border: 1px solid #4cd7f6;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0b1326; }
+        ::-webkit-scrollbar-thumb { background: #3d494c; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4cd7f6; }
+        
+        /* Modal Backdrop Blur */
+        .glass-modal {
+            backdrop-filter: blur(12px);
+            background-color: rgba(30, 41, 59, 0.8); /* Fallback to raw hex for opacity */
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-outline-variant/30">
+<div class="flex justify-between items-center px-margin-desktop h-16 w-full max-w-7xl mx-auto">
+<!-- Brand -->
+<div class="flex items-center gap-md">
+<div class="font-headline-md text-headline-md font-bold text-primary tracking-tighter cursor-pointer">
+                    Portfolio DevOps Platform
+                </div>
+<!-- Status Badge -->
+<div class="hidden md:flex items-center gap-xs px-2 py-1 rounded bg-secondary-fixed/10 border border-secondary-fixed text-secondary-fixed font-label-caps text-label-caps">
+<div class="w-2 h-2 rounded-full bg-secondary-fixed pulse-green"></div>
+                    Backend Online
+                </div>
+</div>
+<!-- Navigation Links (Desktop) -->
+<nav class="hidden md:flex gap-sm h-full items-center">
+<a class="text-primary border-b-2 border-primary pb-1 h-full flex items-center px-2 font-body-md text-body-md active:scale-95 transition-transform duration-150" href="#">Projects</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors h-full flex items-center px-2 font-body-md text-body-md hover:bg-primary/10 hover:text-primary-fixed active:scale-95 transition-transform duration-150" href="#">Stack</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors h-full flex items-center px-2 font-body-md text-body-md hover:bg-primary/10 hover:text-primary-fixed active:scale-95 transition-transform duration-150" href="#">Contact</a>
+</nav>
+<!-- Actions -->
+<div class="flex items-center gap-sm">
+<!-- Trailing Icon Actions -->
+<button class="text-on-surface-variant hover:text-primary transition-colors p-2 rounded hover:bg-primary/10 hover:text-primary-fixed">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">terminal</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-2 rounded hover:bg-primary/10 hover:text-primary-fixed">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">code</span>
+</button>
+<!-- Primary Action -->
+<button class="hidden md:flex items-center gap-xs bg-primary text-on-primary px-4 py-2 rounded font-label-caps text-label-caps font-bold hover:bg-primary-fixed transition-colors active:scale-95 shadow-[0_0_15px_rgba(76,215,246,0.3)]" id="openModalBtn">
+                    + Novo Projeto
+                </button>
+<!-- Avatar -->
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant ml-2">
+<img alt="DevOps Engineer Avatar" class="w-full h-full object-cover" data-alt="A highly detailed close-up of a stylized 3D avatar representing a DevOps engineer. The avatar is wearing futuristic digital glasses reflecting streams of code. The lighting is cinematic, featuring sharp cyan and deep blue studio lights against a dark slate background, conveying a high-tech, modern corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDYcOP5CWyzFn4Yf4V4C1bWgD0zKeL5etdi_SUtGf07Dm7TVJtAYoIXWoI6MoBYt0KeGwyUGS2c4piJxjPPmn4ziZtBT0KvRFyRkObFXa9o9Ksn5m-i0MCxQ_unW7PtL_-44QRgDObpLnjDB-KSk9nXi3djUS0gsePSokWKsMvz5Lp3nuyO7jz4--BzgB9hgnkJBfTfDnNdoYs8DMBu9d9G3LhvPVWxzzUaFbB4oCVscGlvMP0bqYWsA"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Container -->
+<main class="flex-grow pt-[104px] pb-xl px-margin-mobile md:px-margin-desktop w-full max-w-7xl mx-auto">
+<!-- Hero Section -->
+<section class="mb-xl flex flex-col items-start gap-md">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface max-w-3xl">
+                Modern Infrastructure &amp; <span class="text-primary drop-shadow-[0_0_10px_rgba(76,215,246,0.5)]">Cloud Architecture</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl leading-relaxed">
+                Automating deployments, ensuring reliability, and scaling distributed systems. Focused on Kubernetes orchestration, immutable infrastructure via Terraform, and robust CI/CD pipelines.
+            </p>
+<!-- Tech Filters -->
+<div class="flex flex-wrap gap-sm mt-sm">
+<span class="px-3 py-1 rounded-full ghost-badge text-primary font-label-caps text-label-caps cursor-pointer hover:bg-primary hover:text-on-primary transition-colors">Kubernetes</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant border border-outline-variant font-label-caps text-label-caps cursor-pointer hover:border-primary hover:text-primary transition-colors">Terraform</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant border border-outline-variant font-label-caps text-label-caps cursor-pointer hover:border-primary hover:text-primary transition-colors">Docker</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant border border-outline-variant font-label-caps text-label-caps cursor-pointer hover:border-primary hover:text-primary transition-colors">Spring Boot</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant border border-outline-variant font-label-caps text-label-caps cursor-pointer hover:border-primary hover:text-primary transition-colors">CI/CD</span>
+</div>
+</section>
+<!-- Projects Grid Container -->
+<section>
+<div class="flex justify-between items-end mb-md border-b border-outline-variant/30 pb-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary">account_tree</span>
+                    Deployed Architectures
+                </h2>
+<div class="font-code-md text-code-md text-on-surface-variant opacity-60">GET /api/projects</div>
+</div>
+<!-- Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md" id="projectsGrid">
+<!-- Card 1 -->
+<article class="bg-[#1e293b] border border-[#334155] rounded-xl overflow-hidden flex flex-col group glow-border transition-all duration-300">
+<div class="h-48 w-full bg-surface-container relative overflow-hidden">
+<div class="w-full h-full bg-cover bg-center opacity-70 group-hover:opacity-100 transition-opacity" data-alt="A detailed, abstract technical diagram illustrating a microservices architecture deployed on a cloud platform. The diagram features sleek, translucent glowing cyan and emerald nodes connected by pulsing data streams, set against a deep navy blue background. The aesthetic is highly precise, modern corporate, and reminiscent of high-end software topology visualizations." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAdaGdf4AceOQGiOOsgJHoHrEt0KYnj65HzWov0m4ba_qBZInQPRNt9FD1SZNI4eSAVDUmT0EBDQXKg4Iai7B0fmsuRur36Mg4Ith5Et0gIt8oMgeJwOEuhTSUePMU5VT8fjrX94AHh9DIqUXelP2RYbaPbDT4ZeP89tOIDbDiXPvQAJEv8EDbN85AGGB_BRagiGbWBez04oj3z223hMdlcV2LImyizQBQ_3w9YPZdMGve0u52MvRZsuw')"></div>
+<div class="absolute top-2 right-2 flex gap-1">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+</div>
+</div>
+<div class="p-md flex flex-col flex-grow gap-sm">
+<h3 class="font-headline-md text-[20px] leading-tight text-on-surface group-hover:text-primary transition-colors">Global E-commerce API Gateway</h3>
+<p class="font-body-md text-body-md text-on-surface-variant flex-grow">
+                            High-throughput API gateway utilizing Spring Cloud Gateway, routing traffic to 15+ backend microservices. Includes custom rate-limiting and JWT validation filters.
+                        </p>
+<div class="flex flex-wrap gap-xs pt-xs">
+<span class="font-code-md text-[11px] text-primary bg-primary/10 px-2 py-0.5 border border-primary/30 rounded">Spring Boot</span>
+<span class="font-code-md text-[11px] text-secondary bg-secondary/10 px-2 py-0.5 border border-secondary/30 rounded">Redis</span>
+<span class="font-code-md text-[11px] text-tertiary px-2 py-0.5 border border-tertiary/30 rounded">Kubernetes</span>
+</div>
+</div>
+<div class="px-md py-sm border-t border-[#334155] bg-surface-container/50 flex justify-between items-center">
+<div class="flex gap-2">
+<button class="text-on-surface-variant hover:text-primary transition-colors" title="View Source">
+<span class="material-symbols-outlined text-sm" style="font-size: 20px;">code</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors" title="Live Demo">
+<span class="material-symbols-outlined text-sm" style="font-size: 20px;">open_in_new</span>
+</button>
+</div>
+<div class="flex gap-2">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm" style="font-size: 20px;">edit</span>
+</button>
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-sm" style="font-size: 20px;">delete</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="bg-[#1e293b] border border-[#334155] rounded-xl overflow-hidden flex flex-col group glow-border transition-all duration-300">
+<div class="h-48 w-full bg-surface-container relative overflow-hidden">
+<div class="w-full h-full bg-cover bg-center opacity-70 group-hover:opacity-100 transition-opacity" data-alt="A minimalist and sleek visual representation of an automated CI/CD pipeline. The scene features glowing, linear data tracks in neon cyan moving left to right across a dark slate grid, passing through precise geometric nodes that light up in terminal green upon successful processing. The mood is functional, precise, and heavily engineered." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCMaN_WI3oivIgcGO9cgxR2asjt-uNSlo8RL60Q8tvowPeBDBvhA1QQ9zydxtAvURZRBve5vE80AKGd2xZCofFGbZkmeKH661whno837g-TtWyMacwA5LUDRzE7QcRdwy1ISj2WRrcijdJ70p0FMCA3jHQmNKaSaWvAYHHSGQ-PVc1SNmdwYOsgQIFPe7F8QZ_7raRwCY9yLkJi8DCvKPgafEX83Krcp0tIJld8_sILwCISuE7bz7Kfqw')"></div>
+<!-- Overlay status -->
+<div class="absolute bottom-2 left-2 px-2 py-1 bg-surface-container-highest/80 backdrop-blur rounded border border-outline-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-secondary text-[14px]">check_circle</span>
+<span class="font-label-caps text-[10px] text-secondary">Pipeline Passing</span>
+</div>
+</div>
+<div class="p-md flex flex-col flex-grow gap-sm">
+<h3 class="font-headline-md text-[20px] leading-tight text-on-surface group-hover:text-primary transition-colors">Zero-Downtime Deployment Engine</h3>
+<p class="font-body-md text-body-md text-on-surface-variant flex-grow">
+                            Automated Jenkins pipeline enforcing strict security scanning (SonarQube) and automated blue/green deployments to EKS clusters.
+                        </p>
+<div class="flex flex-wrap gap-xs pt-xs">
+<span class="font-code-md text-[11px] text-primary bg-primary/10 px-2 py-0.5 border border-primary/30 rounded">Jenkins</span>
+<span class="font-code-md text-[11px] text-primary bg-primary/10 px-2 py-0.5 border border-primary/30 rounded">Docker</span>
+<span class="font-code-md text-[11px] text-tertiary px-2 py-0.5 border border-tertiary/30 rounded">AWS</span>
+</div>
+</div>
+<div class="px-md py-sm border-t border-[#334155] bg-surface-container/50 flex justify-between items-center">
+<div class="flex gap-2">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm" style="font-size: 20px;">code</span>
+</button>
+</div>
+<div class="flex gap-2">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm" style="font-size: 20px;">edit</span>
+</button>
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-sm" style="font-size: 20px;">delete</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Skeleton Card (Loading State Example) -->
+<article class="bg-[#1e293b] border border-[#334155] rounded-xl overflow-hidden flex flex-col opacity-70 cursor-wait">
+<div class="h-48 w-full bg-surface-variant animate-pulse"></div>
+<div class="p-md flex flex-col flex-grow gap-sm">
+<div class="h-6 bg-surface-variant rounded w-3/4 animate-pulse"></div>
+<div class="space-y-2 flex-grow">
+<div class="h-4 bg-surface-variant rounded w-full animate-pulse"></div>
+<div class="h-4 bg-surface-variant rounded w-5/6 animate-pulse"></div>
+<div class="h-4 bg-surface-variant rounded w-4/6 animate-pulse"></div>
+</div>
+<div class="flex gap-2 pt-xs">
+<div class="h-5 bg-surface-variant rounded w-16 animate-pulse"></div>
+<div class="h-5 bg-surface-variant rounded w-20 animate-pulse"></div>
+</div>
+</div>
+<div class="px-md py-sm border-t border-[#334155] bg-surface-container/50 flex justify-between">
+<div class="flex gap-2">
+<div class="h-5 w-5 bg-surface-variant rounded-full animate-pulse"></div>
+</div>
+</div>
+</article>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-lg bg-surface-container-lowest border-t border-outline-variant/30 flex flex-col md:flex-row justify-between items-center px-margin-desktop gap-md mt-auto">
+<div class="font-label-caps text-on-surface">
+            © 2024 Industrial Digital Ops
+        </div>
+<div class="flex flex-wrap gap-md justify-center">
+<span class="font-code-md text-code-md text-on-surface-variant hover:text-secondary-fixed transition-colors opacity-80 hover:opacity-100 cursor-pointer">Docker</span>
+<span class="font-code-md text-code-md text-on-surface-variant hover:text-secondary-fixed transition-colors opacity-80 hover:opacity-100 cursor-pointer">Spring Boot</span>
+<span class="font-code-md text-code-md text-on-surface-variant hover:text-secondary-fixed transition-colors opacity-80 hover:opacity-100 cursor-pointer">Kubernetes</span>
+<span class="font-code-md text-code-md text-on-surface-variant hover:text-secondary-fixed transition-colors opacity-80 hover:opacity-100 cursor-pointer">Terraform</span>
+</div>
+</footer>
+<!-- Modal Overlay (+ Novo Projeto) -->
+<div class="fixed inset-0 z-[100] hidden flex items-center justify-center px-4" id="projectModal">
+<div class="absolute inset-0 bg-background/80 glass-modal transition-opacity" id="modalBackdrop"></div>
+<div class="relative bg-surface-container-high border border-outline-variant/50 rounded-xl shadow-2xl w-full max-w-2xl transform transition-all scale-95 opacity-0" id="modalContent">
+<!-- Modal Header -->
+<div class="flex justify-between items-center p-md border-b border-outline-variant/30">
+<h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary">add_box</span>
+                    Deploy New Architecture
+                </h3>
+<button class="text-on-surface-variant hover:text-error transition-colors rounded-full p-1 hover:bg-error/10" id="closeModalBtn">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Modal Body (Terminal-like Form) -->
+<div class="p-md">
+<form class="space-y-sm">
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-1">Project.Name</label>
+<input class="w-full bg-[#0f172a] border border-[#334155] rounded-lg px-3 py-2 text-on-surface font-code-md text-code-md focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all placeholder:text-outline/50" placeholder="e.g., auth-service-v2" type="text"/>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-1">Architecture.Description</label>
+<textarea class="w-full bg-[#0f172a] border border-[#334155] rounded-lg px-3 py-2 text-on-surface font-body-md text-body-md focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all placeholder:text-outline/50 resize-none" placeholder="Describe the components, flow, and purpose..." rows="3"></textarea>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-sm">
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-1">Repository.URL</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3">
+<span class="material-symbols-outlined text-outline text-[18px]">code</span>
+</span>
+<input class="w-full bg-[#0f172a] border border-[#334155] rounded-lg pl-9 pr-3 py-2 text-on-surface font-code-md text-[13px] focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all placeholder:text-outline/50" placeholder="https://github.com/..." type="url"/>
+</div>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-1">Endpoint.URL</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3">
+<span class="material-symbols-outlined text-outline text-[18px]">link</span>
+</span>
+<input class="w-full bg-[#0f172a] border border-[#334155] rounded-lg pl-9 pr-3 py-2 text-on-surface font-code-md text-[13px] focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all placeholder:text-outline/50" placeholder="https://api.example.com" type="url"/>
+</div>
+</div>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-1">Tech.Stack []</label>
+<input class="w-full bg-[#0f172a] border border-[#334155] rounded-lg px-3 py-2 text-primary font-code-md text-code-md focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all placeholder:text-outline/50" placeholder="Enter comma separated tags..." type="text"/>
+<div class="flex gap-2 mt-2">
+<span class="text-[11px] font-code-md text-outline-variant bg-surface-container px-2 py-0.5 rounded border border-outline-variant/30 flex items-center gap-1 cursor-pointer hover:border-primary hover:text-primary">
+                                docker <span class="material-symbols-outlined text-[12px]">close</span>
+</span>
+</div>
+</div>
+</form>
+</div>
+<!-- Modal Footer -->
+<div class="p-md border-t border-outline-variant/30 bg-surface-container/30 flex justify-end gap-sm rounded-b-xl">
+<button class="px-4 py-2 rounded border border-primary text-primary font-label-caps text-label-caps hover:bg-primary/10 transition-colors" id="cancelModalBtn">
+                    Cancel
+                </button>
+<button class="px-4 py-2 rounded bg-primary text-on-primary font-label-caps text-label-caps font-bold hover:bg-primary-fixed transition-colors flex items-center gap-2 shadow-[0_0_10px_rgba(76,215,246,0.3)]" id="submitProjectBtn">
+<span class="material-symbols-outlined text-[18px]">cloud_upload</span>
+                    Execute Post
+                </button>
+</div>
+</div>
+</div>
+<!-- Toast Notification Container -->
+<div class="fixed bottom-lg right-margin-desktop z-[110] flex flex-col gap-2" id="toastContainer"></div>
+<!-- Scripts for Interactions -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Modal Logic
+            const modal = document.getElementById('projectModal');
+            const modalContent = document.getElementById('modalContent');
+            const openBtn = document.getElementById('openModalBtn');
+            const closeBtn = document.getElementById('closeModalBtn');
+            const cancelBtn = document.getElementById('cancelModalBtn');
+            const submitBtn = document.getElementById('submitProjectBtn');
+            const backdrop = document.getElementById('modalBackdrop');
+
+            const openModal = () => {
+                modal.classList.remove('hidden');
+                // Trigger reflow
+                void modal.offsetWidth;
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            };
+
+            const closeModal = () => {
+                modalContent.classList.remove('scale-100', 'opacity-100');
+                modalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300); // match transition duration
+            };
+
+            openBtn.addEventListener('click', openModal);
+            closeBtn.addEventListener('click', closeModal);
+            cancelBtn.addEventListener('click', closeModal);
+            backdrop.addEventListener('click', closeModal);
+
+            // Toast Notification Logic
+            const showToast = (message, type = 'success') => {
+                const container = document.getElementById('toastContainer');
+                const toast = document.createElement('div');
+                
+                const isSuccess = type === 'success';
+                const bgColor = isSuccess ? 'bg-secondary-container' : 'bg-error-container';
+                const textColor = isSuccess ? 'text-on-secondary-container' : 'text-on-error-container';
+                const icon = isSuccess ? 'check_circle' : 'error';
+                
+                toast.className = `${bgColor} ${textColor} px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 transform translate-x-full transition-transform duration-300 ease-out border border-${isSuccess ? 'secondary' : 'error'}/30`;
+                toast.innerHTML = `
+                    <span class="material-symbols-outlined">${icon}</span>
+                    <span class="font-code-md text-[13px]">${message}</span>
+                `;
+                
+                container.appendChild(toast);
+                
+                // Animate in
+                setTimeout(() => toast.classList.remove('translate-x-full'), 10);
+                
+                // Animate out and remove
+                setTimeout(() => {
+                    toast.classList.add('translate-x-full');
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            };
+
+            // Mock Form Submission
+            submitBtn.addEventListener('click', () => {
+                const icon = submitBtn.querySelector('span');
+                const originalText = submitBtn.innerHTML;
+                
+                // Loading state
+                submitBtn.innerHTML = `<span class="material-symbols-outlined animate-spin">sync</span> Executing...`;
+                submitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    closeModal();
+                    showToast('HTTP 201 Created: Architecture Deployed');
+                }, 1500);
+            });
+        });
+    </script>
+</body></html>
