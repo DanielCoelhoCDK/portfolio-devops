@@ -124,27 +124,45 @@ export const App: React.FC = () => {
       {/* Top Navbar */}
       <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-outline-variant/30">
         <div className="flex justify-between items-center px-4 md:px-10 h-16 w-full max-w-7xl mx-auto">
-          <div className="flex items-center gap-6">
-            <div className="text-xl md:text-2xl font-bold text-primary tracking-tighter cursor-pointer font-mono">
-              Portfolio DevOps Platform
-            </div>
+          {/* Brand & Status */}
+          <div className="flex items-center gap-4 md:gap-6">
+            <a href="#hero" className="text-xl md:text-2xl font-bold text-primary tracking-tighter cursor-pointer font-mono">
+              Daniel Coelho <span className="text-on-surface text-base font-normal hidden sm:inline">| DevOps & Infra</span>
+            </a>
 
             {/* Status Badge */}
-            <div className={`hidden md:flex items-center gap-2 px-2.5 py-1 rounded text-xs font-mono border ${backendOnline
-                ? 'bg-secondary/10 border-secondary text-secondary'
-                : 'bg-red-500/10 border-red-500 text-red-400'
+            <div className={`flex items-center gap-2 px-2.5 py-1 rounded text-xs font-mono border ${backendOnline
+              ? 'bg-secondary/10 border-secondary text-secondary'
+              : 'bg-red-500/10 border-red-500 text-red-400'
               }`}>
               <div className={`w-2 h-2 rounded-full ${backendOnline ? 'bg-secondary pulse-green' : 'bg-red-500'}`} />
-              {backendOnline ? 'Backend Online (UP)' : 'Backend Offline'}
+              {backendOnline ? 'API Spring Boot: Online' : 'API: Offline'}
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
+          {/* Navigation Links */}
+          <nav className="hidden lg:flex gap-6 h-full items-center font-mono text-sm">
+            <a href="#projects" className="text-on-surface-variant hover:text-primary transition-colors h-full flex items-center px-2">
+              Projetos
+            </a>
+            <a href="#about" className="text-on-surface-variant hover:text-primary transition-colors h-full flex items-center px-2">
+              Sobre Mim
+            </a>
+            <a href="https://github.com/DanielCoelhoCDK" target="_blank" rel="noopener noreferrer" className="text-on-surface-variant hover:text-primary transition-colors h-full flex items-center px-2">
+              GitHub
+            </a>
+            <a href="https://linkedin.com/in/antoniodanielcoelho" target="_blank" rel="noopener noreferrer" className="text-on-surface-variant hover:text-primary transition-colors h-full flex items-center px-2">
+              LinkedIn
+            </a>
+          </nav>
+
+          {/* Actions */}
+          <div className="flex items-center gap-2 md:gap-3">
             <button
               onClick={() => { resetForm(); setModalOpen(true); }}
-              className="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded font-mono text-xs font-bold hover:bg-primary-fixed transition-all active:scale-95 shadow-[0_0_15px_rgba(76,215,246,0.3)]"
+              className="flex items-center gap-1.5 bg-primary text-on-primary px-3.5 py-1.5 rounded font-mono text-xs font-bold hover:bg-primary-fixed transition-all active:scale-95 shadow-[0_0_12px_rgba(76,215,246,0.3)]"
             >
-              <span className="material-symbols-outlined text-[18px]">add</span>
+              <span className="material-symbols-outlined text-[16px]">add</span>
               Novo Projeto
             </button>
           </div>
@@ -152,42 +170,88 @@ export const App: React.FC = () => {
       </header>
 
       {/* Main Container */}
-      <main className="flex-grow pt-28 pb-16 px-4 md:px-10 w-full max-w-7xl mx-auto">
-        {/* Hero Section */}
-        <section className="mb-14 flex flex-col items-start gap-4">
-          <h1 className="text-3xl md:text-5xl font-bold text-on-surface max-w-3xl leading-tight">
-            Modern Infrastructure & <span className="text-primary drop-shadow-[0_0_10px_rgba(76,215,246,0.5)]">Cloud Architecture</span>
-          </h1>
-          <p className="text-base md:text-lg text-on-surface-variant max-w-2xl leading-relaxed">
-            Automação de deploys, confiabilidade e arquitetura escalável com microsserviços. Portfólio focado em orquestração Kubernetes, infraestrutura declarativa via Terraform e pipelines CI/CD.
-          </p>
+      <main className="flex-grow pt-28 pb-16 px-4 md:px-10 w-full max-w-7xl mx-auto space-y-20">
 
-          {/* Tech Filters */}
-          <div className="flex flex-wrap gap-2 mt-2">
-            {defaultFilterTags.map((tag) => (
-              <button
-                key={tag}
-                onClick={() => setSelectedTag(tag)}
-                className={`px-3 py-1 rounded-full font-mono text-xs transition-all ${selectedTag === tag
+        {/* Hero Section */}
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center" id="hero">
+          {/* Coluna da Esquerda */}
+          <div className="lg:col-span-8 flex flex-col items-start gap-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-primary/10 border border-primary/30 text-primary font-mono text-xs">
+              <span className="material-symbols-outlined text-[14px]">terminal</span>
+              Infrastructure & Cloud DevOps Engineer
+            </div>
+
+            <h1 className="text-3xl md:text-5xl font-bold text-on-surface max-w-3xl leading-tight">
+              Olá, sou o <span className="text-primary drop-shadow-[0_0_10px_rgba(76,215,246,0.5)]">Daniel Coelho</span>.
+            </h1>
+
+            <p className="text-base md:text-lg text-on-surface-variant max-w-2xl leading-relaxed">
+              Profissional de Infraestrutura e DevOps com mais de 10 anos de experiência em redes corporativas, Linux, virtualização e arquiteturas de alta disponibilidade. Aqui apresento meus projetos práticos com contêineres, automação e orquestração.
+            </p>
+
+            {/* Quick Metrics com Efeito Glow e Leve Zoom */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2 w-full max-w-xl">
+              <div className="bg-surface-container border border-outline-variant/30 p-3 rounded glow-border transition-all duration-300 hover:scale-[1.03] hover:border-primary cursor-default shadow-md">
+                <div className="font-mono text-xl font-bold text-primary">10+ Anos</div>
+                <div className="text-xs text-on-surface-variant font-mono">Infra & Suporte</div>
+              </div>
+              <div className="bg-surface-container border border-outline-variant/30 p-3 rounded glow-border transition-all duration-300 hover:scale-[1.03] hover:border-primary cursor-default shadow-md">
+                <div className="font-mono text-xl font-bold text-secondary">Full-Stack</div>
+                <div className="text-xs text-on-surface-variant font-mono">Java + React + SQL</div>
+              </div>
+              <div className="bg-surface-container border border-outline-variant/30 p-3 rounded col-span-2 sm:col-span-1 glow-border transition-all duration-300 hover:scale-[1.03] hover:border-primary cursor-default shadow-md">
+                <div className="font-mono text-xl font-bold text-primary">DevOps</div>
+                <div className="text-xs text-on-surface-variant font-mono">Docker & K8s</div>
+              </div>
+            </div>
+
+            {/* Tech Filters */}
+            <div className="flex flex-wrap gap-2 mt-4">
+              {defaultFilterTags.map((tag) => (
+                <button
+                  key={tag}
+                  onClick={() => setSelectedTag(tag)}
+                  className={`px-3 py-1 rounded-full font-mono text-xs transition-all ${selectedTag === tag
                     ? 'ghost-badge text-primary font-bold'
                     : 'bg-surface-variant text-on-surface-variant border border-outline-variant/60 hover:border-primary hover:text-primary'
-                  }`}
-              >
-                {tag}
-              </button>
-            ))}
+                    }`}
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Coluna da Direita: Foto */}
+          <div className="lg:col-span-4 flex justify-center lg:justify-end">
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-full blur opacity-30 group-hover:opacity-60 transition duration-500" />
+
+              <div className="relative w-56 h-56 sm:w-64 sm:h-64 rounded-full overflow-hidden border-2 border-primary/50 shadow-2xl bg-surface-container">
+                <img
+                  src="/profile.jpeg"
+                  alt="Daniel Coelho"
+                  className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                />
+              </div>
+
+              <div className="absolute -bottom-2 right-4 bg-surface-container-highest/90 backdrop-blur border border-primary/40 px-3 py-1 rounded-full flex items-center gap-1.5 shadow-lg">
+                <div className="w-2 h-2 rounded-full bg-secondary pulse-green" />
+                <span className="font-mono text-[11px] text-on-surface">Available for Hire</span>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Projects Grid Header */}
-        <section>
+        {/* Projects Grid Section */}
+        <section id="projects">
           <div className="flex justify-between items-end mb-6 border-b border-outline-variant/30 pb-3">
             <h2 className="text-xl font-semibold text-on-surface flex items-center gap-2">
-              <span className="material-symbols-outlined text-primary">account_tree</span>
-              Deployed Architectures
+              <span className="material-symbols-outlined text-primary">folder_open</span>
+              Projetos em Destaque
             </h2>
             <div className="font-mono text-xs text-on-surface-variant opacity-70">
-              GET /api/projects ({filteredProjects.length})
+              {filteredProjects.length} projeto(s) encontrado(s)
             </div>
           </div>
 
@@ -221,7 +285,7 @@ export const App: React.FC = () => {
                 >
                   <div className="h-48 w-full bg-surface-container relative overflow-hidden">
                     <img
-                      src={project.imageUrl || 'https://images.unsplash.com/photo-1618401471353-b98aedd04e11?q=80&w=800&auto=format&fit=crop'}
+                      src={project.imageUrl || 'https://images.unsplash.com/photo-1618401471353-b98aedd04e11?q=80&w=800&auto=format&crop=entropy'}
                       alt={project.title}
                       className="w-full h-full object-cover opacity-75 group-hover:opacity-100 transition-opacity duration-300"
                     />
@@ -291,21 +355,109 @@ export const App: React.FC = () => {
             </div>
           )}
         </section>
+
+        {/* Seção Sobre Mim */}
+        <section id="about" className="pt-6">
+          <div className="flex justify-between items-end mb-6 border-b border-outline-variant/30 pb-3">
+            <h2 className="text-xl font-semibold text-on-surface flex items-center gap-2">
+              <span className="material-symbols-outlined text-primary">person</span>
+              Sobre Mim
+            </h2>
+            <div className="font-mono text-xs text-on-surface-variant opacity-70">
+              whoami & skills
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* Bio / Background */}
+            <div className="lg:col-span-7 bg-[#1e293b] border border-[#334155] rounded-xl p-6 glow-border transition-all duration-300">
+              <h3 className="font-mono text-lg font-bold text-primary mb-4 flex items-center gap-2">
+                <span className="material-symbols-outlined text-[20px]">badge</span>
+                Trajetória Profissional
+              </h3>
+              <p className="text-sm text-on-surface-variant leading-relaxed mb-4">
+                Com mais de 10 anos de experiência na área de Tecnologia da Informação, minha atuação abrange administração de servidores Linux/Windows, redes corporativas, segurança perimetral (firewalls) e virtualização.
+              </p>
+              <p className="text-sm text-on-surface-variant leading-relaxed mb-6">
+                Atualmente, foco na convergência entre infraestrutura e desenvolvimento através da cultura DevOps: automação de ambientes com Docker e Kubernetes, infraestrutura declarativa com Terraform e desenvolvimento de APIs modernas com Spring Boot e React.
+              </p>
+
+              <div className="flex flex-wrap gap-3 pt-2 border-t border-[#334155]">
+                <a
+                  href="https://linkedin.com/in/antoniodanielcoelho"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded bg-[#0077b5]/10 border border-[#0077b5]/40 text-[#00a0dc] font-mono text-xs font-semibold hover:bg-[#0077b5]/20 transition-all"
+                >
+                  <span className="material-symbols-outlined text-[16px]">launch</span>
+                  Conectar no LinkedIn
+                </a>
+                <a
+                  href="https://github.com/DanielCoelhoCDK"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded bg-surface-container border border-outline-variant/50 text-on-surface font-mono text-xs font-semibold hover:border-primary hover:text-primary transition-all"
+                >
+                  <span className="material-symbols-outlined text-[16px]">code</span>
+                  Explorar Repositórios
+                </a>
+              </div>
+            </div>
+
+            {/* Core Competencies Cards */}
+            <div className="lg:col-span-5 grid grid-cols-1 gap-4">
+              <div className="bg-[#1e293b] border border-[#334155] rounded-xl p-4 glow-border">
+                <div className="font-mono text-xs font-bold text-secondary uppercase tracking-wider mb-2 flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[16px]">cloud</span>
+                  Cloud & DevOps
+                </div>
+                <p className="text-xs text-on-surface-variant leading-relaxed font-mono">
+                  Docker, Docker Compose, Kubernetes, CI/CD Pipelines, Terraform, Linux Server, GitOps
+                </p>
+              </div>
+
+              <div className="bg-[#1e293b] border border-[#334155] rounded-xl p-4 glow-border">
+                <div className="font-mono text-xs font-bold text-primary uppercase tracking-wider mb-2 flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[16px]">router</span>
+                  Infraestrutura & Redes
+                </div>
+                <p className="text-xs text-on-surface-variant leading-relaxed font-mono">
+                  Virtualização (Proxmox/VMware), Firewalls UTM/NGFW, Roteamento, DNS, VPNs, Monitoramento
+                </p>
+              </div>
+
+              <div className="bg-[#1e293b] border border-[#334155] rounded-xl p-4 glow-border">
+                <div className="font-mono text-xs font-bold text-tertiary uppercase tracking-wider mb-2 flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[16px]">code_blocks</span>
+                  Desenvolvimento & Dados
+                </div>
+                <p className="text-xs text-on-surface-variant leading-relaxed font-mono">
+                  Java (Spring Boot 3), REST APIs, PostgreSQL, React, TypeScript, Tailwind CSS
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </main>
 
-      {/* Footer */}
+      {/* Footer Pessoal */}
       <footer className="w-full py-8 bg-surface-container-lowest border-t border-outline-variant/30 flex flex-col md:flex-row justify-between items-center px-4 md:px-10 gap-4 mt-auto">
         <div className="font-mono text-xs text-on-surface-variant">
-          © 2026 Portfolio DevOps Platform
+          © 2026 Daniel Coelho • Desenvolvido com Spring Boot, React, Docker & PostgreSQL
         </div>
-        <div className="flex flex-wrap gap-4 font-mono text-xs text-on-surface-variant">
-          <span>Spring Boot 3</span>
+        <div className="flex flex-wrap items-center gap-4 font-mono text-xs text-on-surface-variant">
+          <a href="https://github.com/DanielCoelhoCDK" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+            GitHub
+          </a>
           <span>•</span>
-          <span>Docker</span>
+          <a href="https://linkedin.com/in/antoniodanielcoelho" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+            LinkedIn
+          </a>
           <span>•</span>
-          <span>PostgreSQL 16</span>
-          <span>•</span>
-          <span>React + TS</span>
+          <a href="#hero" className="hover:text-primary transition-colors">
+            Voltar ao Topo
+          </a>
         </div>
       </footer>
 
@@ -435,8 +587,8 @@ export const App: React.FC = () => {
       {toast && (
         <div className="fixed bottom-6 right-6 z-[110]">
           <div className={`px-4 py-3 rounded-lg shadow-xl flex items-center gap-3 border ${toast.type === 'success'
-              ? 'bg-[#00b954]/20 text-[#6bff8f] border-[#00b954]'
-              : 'bg-red-950 text-red-300 border-red-500'
+            ? 'bg-[#00b954]/20 text-[#6bff8f] border-[#00b954]'
+            : 'bg-red-950 text-red-300 border-red-500'
             }`}>
             <span className="material-symbols-outlined text-[20px]">
               {toast.type === 'success' ? 'check_circle' : 'error'}
