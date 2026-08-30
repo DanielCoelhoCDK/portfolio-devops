@@ -1,51 +1,61 @@
 version: '3.8'
 
 services:
-  postgres:
+  database:
     image: postgres:16-alpine
-    container_name: portfolio-postgres
+    container_name: devops-postgres
     restart: always
     environment:
-      POSTGRES_DB: portfoliodb
+      POSTGRES_DB: portfolio_db
       POSTGRES_USER: devops_user
       POSTGRES_PASSWORD: devops_password
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ../database/init:/docker-entrypoint-initdb.d
-    networks:
-      - portfolio-network
+      - ../database/init/01-init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U devops_user -d portfoliodb"]
+      test: ["CMD-SHELL", "pg_isready -U devops_user -d portfolio_db"]
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - devops-network
 
   backend:
     build:
       context: ../backend
       dockerfile: Dockerfile
-    container_name: portfolio-backend
+    container_name: devops-backend
     restart: always
+    depends_on:
+      - database
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_NAME: portfoliodb
-      DB_USER: devops_user
-      DB_PASSWORD: devops_password
-      PORT: 8080
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/portfolio_db
+      SPRING_DATASOURCE_USERNAME: devops_user
+      SPRING_DATASOURCE_PASSWORD: devops_password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
     ports:
       - "8080:8080"
-    depends_on:
-      postgres:
-        condition: service_healthy
     networks:
-      - portfolio-network
+      - devops-network
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: devops-frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+    networks:
+      - devops-network
 
 volumes:
   pgdata:
 
 networks:
-  portfolio-network:
+  devops-network:
     driver: bridge
