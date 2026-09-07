@@ -18,6 +18,25 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/projects")
 @CrossOrigin(origins = "*")
+/**
+ * Controller REST para consulta e manutenção dos projetos do portfólio.
+ *
+ * <p>Recurso base: {@code /api/projects}. As respostas de sucesso usam
+ * {@link ProjectResponseDTO}; as operações de criação e atualização recebem
+ * {@link ProjectRequestDTO} no corpo da requisição.</p>
+ *
+ * <p>Contrato do corpo {@code ProjectRequest}:</p>
+ * <pre>{@code
+ * {
+ *   "title": "Nome do projeto",
+ *   "description": "Descrição do projeto",
+ *   "imageUrl": "https://example.com/image.png",
+ *   "githubUrl": "https://github.com/example/project",
+ *   "demoUrl": "https://example.com",
+ *   "technologies": ["Java", "Spring Boot"]
+ * }
+ * }</pre>
+ */
 public class ProjectController {
 
     private final ProjectRepository projectRepository;
@@ -28,6 +47,15 @@ public class ProjectController {
         this.technologyRepository = technologyRepository;
     }
 
+    /**
+     * Lista todos os projetos cadastrados.
+     *
+     * <p><strong>HTTP:</strong> {@code GET /api/projects}</p>
+     *
+     * @return lista de projetos representados por {@link ProjectResponseDTO}
+     * @apiNote Retorna {@code 200 OK} com uma lista JSON. Quando não existem
+     * projetos, a lista retornada é vazia.
+     */
     @GetMapping
     public List<ProjectResponseDTO> getAllProjects() {
         return projectRepository.findAll()
@@ -36,6 +64,15 @@ public class ProjectController {
                 .toList();
     }
 
+            /**
+             * Busca um projeto pelo identificador.
+             *
+             * <p><strong>HTTP:</strong> {@code GET /api/projects/{id}}</p>
+             *
+             * @param id identificador numérico do projeto
+             * @return {@code 200 OK} com o projeto ou {@code 404 Not Found} quando o
+             * projeto não existe
+             */
     @GetMapping("/{id}")
     public ResponseEntity<ProjectResponseDTO> getProjectById(@PathVariable Long id) {
         return projectRepository.findById(id)
@@ -43,6 +80,21 @@ public class ProjectController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+            /**
+             * Cria um novo projeto.
+             *
+             * <p><strong>HTTP:</strong> {@code POST /api/projects}</p>
+             *
+             * <p><strong>Request body:</strong> {@link ProjectRequestDTO} em JSON.
+             * Os campos {@code title} e {@code description} são obrigatórios;
+             * {@code imageUrl}, {@code githubUrl}, {@code demoUrl} e
+             * {@code technologies} são opcionais. Cada item de {@code technologies}
+             * é associado ao projeto e uma tecnologia inexistente é criada.</p>
+             *
+             * @param dto dados do projeto a ser criado
+             * @return {@code 201 Created} com o projeto persistido e seu identificador
+             * gerado
+             */
     @PostMapping
     public ResponseEntity<ProjectResponseDTO> createProject(@Valid @RequestBody ProjectRequestDTO dto) {
         Project project = new Project();
@@ -52,6 +104,20 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ProjectResponseDTO.fromEntity(savedProject));
     }
 
+    /**
+     * Atualiza um projeto existente.
+     *
+     * <p><strong>HTTP:</strong> {@code PUT /api/projects/{id}}</p>
+     *
+     * <p><strong>Request body:</strong> {@link ProjectRequestDTO} em JSON.
+     * O corpo segue o mesmo contrato do endpoint de criação: {@code title} e
+     * {@code description} são obrigatórios e os demais campos são opcionais.</p>
+     *
+     * @param id identificador numérico do projeto a atualizar
+     * @param dto novos dados do projeto
+     * @return {@code 200 OK} com o projeto atualizado ou {@code 404 Not Found}
+     * quando o projeto não existe
+     */
     @PutMapping("/{id}")
     public ResponseEntity<ProjectResponseDTO> updateProject(@PathVariable Long id,
             @Valid @RequestBody ProjectRequestDTO dto) {
@@ -64,6 +130,18 @@ public class ProjectController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+            /**
+             * Remove um projeto existente.
+             *
+             * <p><strong>HTTP:</strong> {@code DELETE /api/projects/{id}}</p>
+             *
+             * <p>A remoção também elimina as associações do projeto com tecnologias,
+             * conforme a regra de integridade referencial do banco de dados.</p>
+             *
+             * @param id identificador numérico do projeto a remover
+             * @return {@code 204 No Content} quando removido ou {@code 404 Not Found}
+             * quando o projeto não existe
+             */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
         if (!projectRepository.existsById(id)) {
