@@ -8,6 +8,9 @@
 
 # Portfolio DevOps
 
+[![Backend CI](https://github.com/DanielCoelhoCDK/portfolio-devops/actions/workflows/backend-ci.yml/badge.svg?branch=main)](https://github.com/DanielCoelhoCDK/portfolio-devops/actions/workflows/backend-ci.yml)
+[![Frontend CI](https://github.com/DanielCoelhoCDK/portfolio-devops/actions/workflows/frontend-ci.yml/badge.svg?branch=main)](https://github.com/DanielCoelhoCDK/portfolio-devops/actions/workflows/frontend-ci.yml)
+
 Aplicação de portfólio pessoal desenvolvida como laboratório prático de DevOps. O projeto é composto por uma SPA em React, uma API REST em Spring Boot e um banco de dados PostgreSQL, todos executados em containers Docker.
 
 ## Visão geral da arquitetura
