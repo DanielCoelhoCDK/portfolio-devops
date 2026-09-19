@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { Project, ProjectRequest } from '../types/project';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080/api',
+    baseURL: '/api',
 });
 
 export const getProjects = async (): Promise<Project[]> => {
