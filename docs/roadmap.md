@@ -35,7 +35,7 @@ com infraestrutura Cloud/DevOps. O projeto demonstra domínio prático em:
 | 2 | Frontend SPA | Interface React consumindo a API REST via Nginx reverse proxy | ✅ Concluída |
 | 3 | Conteinerização completa | Dockerfiles multi-stage e orquestração local com healthcheck | ✅ Concluída |
 | 4 | Pipeline CI/CD | GitHub Actions com testes automatizados, service containers, type check e build | ✅ Concluída |
-| 5 | Infraestrutura como Código (IaC) | Provisionamento na AWS via Terraform (VPC, Subnets, Gateways, EKS/ECS, RDS) | 🎯 Próximo passo |
+| 5 | Infraestrutura como Código (IaC) | Provisionamento na AWS via Terraform (VPC, Subnets, Gateways, EKS/ECS, RDS) | 🚧 Em andamento |
 | 6 | Automação e configuração | Provisionamento complementar e hardening de instâncias com Ansible | ⏳ Pendente |
 | 7 | Observabilidade | Métricas e dashboards com Prometheus, Grafana e Actuator | ⏳ Pendente |
 | 8 | Kubernetes e GitOps | Deploy declarativo em cluster Kubernetes usando Argo CD e Helm | ⏳ Pendente |
@@ -102,37 +102,48 @@ com infraestrutura Cloud/DevOps. O projeto demonstra domínio prático em:
 - **Transparência de status:** badges dinâmicos de CI/CD no topo do `README.md`,
   refletindo a saúde das esteiras em tempo real.
 
-## Próximos passos: Fase 5, Infraestrutura como Código (IaC) com Terraform
+## Fase 5 em andamento: Infraestrutura como Código (IaC) com Terraform
 
-O próximo incremento de engenharia consiste em abstrair toda a infraestrutura
-de nuvem em código declarativo, versionável e reproduzível utilizando o
-Terraform.
+A implementação Terraform foi iniciada no ambiente `dev`. A camada de rede
+inclui VPC, subnets públicas e privadas em duas AZs, Internet Gateway, rotas
+públicas e NAT Gateways com rotas privadas por AZ. A configuração passou por
+validação (`terraform validate`), mas ainda não foi aplicada na AWS.
+
+Permanecem pendentes o backend remoto, os módulos de compute e banco de dados,
+o RDS PostgreSQL e as regras de Security Groups.
 
 ### Estruturação de diretórios Terraform
 
 Criar a estrutura de IaC em `terraform/`, com divisão em módulos reutilizáveis
 (`network`, `compute` e `database`).
 
-### Camada de rede (VPC)
+### Camada de rede (VPC) — implementada no código
 
 Provisionar Virtual Private Cloud (VPC), subnets públicas e privadas em
-multi-AZ, Internet Gateway, NAT Gateway e tabelas de roteamento na AWS.
+multi-AZ, Internet Gateway, NAT Gateway e tabelas de roteamento na AWS. A
+configuração atual define um NAT Gateway por AZ; o provisionamento ainda
+depende de uma execução aprovada do Terraform.
 
-### Gerenciamento de estado (Remote State)
+### Gerenciamento de estado (Remote State) — pendente
 
 Configurar backend remoto no Amazon S3 com state locking via tabela DynamoDB,
 garantindo consistência e impedindo execuções simultâneas conflitantes.
 
-### Camada de banco de dados gerenciado (Amazon RDS)
+### Camada de banco de dados gerenciado (Amazon RDS) — pendente
 
 Codificar a transição do banco containerizado local para uma instância
 gerenciada PostgreSQL no RDS em subnet privada.
 
-### Segurança e conformidade (Security Groups)
+### Segurança e conformidade (Security Groups) — pendente
 
 Criar regras de firewall (Security Groups) com menor privilégio, permitindo
 tráfego apenas nas portas necessárias entre as camadas de aplicação e banco de
 dados.
+
+### Compute e orquestração — pendente
+
+Criar o módulo de compute e decidir/provisionar a plataforma de execução
+(EKS ou ECS), conforme o escopo da Fase 5.
 
 ## Direcionamento das fases subsequentes
 
