@@ -25,7 +25,7 @@ provider "aws" {
       ManagedBy   = "Terraform"
     }
   }
-  
+
 }
 
 module "vpc" {
